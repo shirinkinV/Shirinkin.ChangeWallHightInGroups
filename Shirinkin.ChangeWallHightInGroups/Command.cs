@@ -1,3 +1,4 @@
+using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,6 +12,7 @@ using System.Windows.Interop;
 
 namespace Shirinkin.ChangeWallHightInGroups;
 
+[Transaction(TransactionMode.Manual)]
 public class Command : IExternalCommand
 {
     [DllImport("user32.dll")]
