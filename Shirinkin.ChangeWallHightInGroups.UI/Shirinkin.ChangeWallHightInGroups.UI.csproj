@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Platforms>x64</Platforms>
+		<UseWPF>true</UseWPF>
+		<Optimize>false</Optimize>
+	</PropertyGroup>
+
+	<Target Name="SetAssemblyVersion" BeforeTargets="BeforeBuild">
+		<_buildTasks.SetVersionTask>
+			<Output TaskParameter="TheVersion" PropertyName="AssemblyVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="FileVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="Version" />
+		</_buildTasks.SetVersionTask>
+	</Target>
+
+	<UsingTask TaskName="_buildTasks.SetVersionTask" AssemblyFile="..\_buildTasks\bin\Release\netstandard2.0\_buildTasks.dll" />
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Shirinkin.ChangeWallHightInGroups.Contracts\Shirinkin.ChangeWallHightInGroups.Contracts.csproj" />
+	</ItemGroup>
+</Project>

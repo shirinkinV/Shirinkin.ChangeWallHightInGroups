@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>latest</LangVersion>	
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>D2021;R2021</Configurations>
+		<Platforms>x64</Platforms>
+		<Optimize>false</Optimize>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'R2021' Or '$(Configuration)' == 'D2021'">
+		<PackageReference Include="RevitAPI2021" Version="21.1.11.27" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Shirinkin.ChangeWallHightInGroups.Contracts\Shirinkin.ChangeWallHightInGroups.Contracts.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'D2021'">
+		<DefineConstants>DEBUG;TRACE;REVIT_2021;REVIT_2019_AND_GREATER;REVIT_2020_AND_GREATER;REVIT_2021_AND_GREATER</DefineConstants>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<OutDir>.\bin\Debug\2021\</OutDir>
+		<AssemblyName>$(MSBuildProjectName)_21</AssemblyName>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'R2021'">
+		<DefineConstants>TRACE;REVIT_2021;REVIT_2019_AND_GREATER;REVIT_2020_AND_GREATER;REVIT_2021_AND_GREATER</DefineConstants>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<OutDir>.\bin\Release\2021\</OutDir>
+		<AssemblyName>$(MSBuildProjectName)_21</AssemblyName>
+	</PropertyGroup>
+
+	<Target Name="SetAssemblyVersion" BeforeTargets="BeforeBuild">
+		<_buildTasks.SetVersionTask>
+			<Output TaskParameter="TheVersion" PropertyName="AssemblyVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="FileVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="Version" />
+		</_buildTasks.SetVersionTask>
+	</Target>
+
+	<UsingTask TaskName="_buildTasks.SetVersionTask" AssemblyFile="..\_buildTasks\bin\Release\netstandard2.0\_buildTasks.dll" />
+</Project>

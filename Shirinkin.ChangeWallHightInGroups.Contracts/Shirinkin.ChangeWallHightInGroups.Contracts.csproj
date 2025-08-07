@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Platforms>x64</Platforms>
+		<Optimize>false</Optimize>
+		<!--Wpf Thread Dispatcher-->
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+
+	<Target Name="SetAssemblyVersionWithIncrease" BeforeTargets="BeforeBuild" Condition="'$(Configuration)' == 'Debug'">
+		<_buildTasks.SetVersionWithIncreaseTask>
+			<Output TaskParameter="TheVersion" PropertyName="AssemblyVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="FileVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="Version" />
+		</_buildTasks.SetVersionWithIncreaseTask>
+	</Target>
+
+	<UsingTask TaskName="_buildTasks.SetVersionWithIncreaseTask" AssemblyFile="..\_buildTasks\bin\Release\netstandard2.0\_buildTasks.dll" Condition="'$(Configuration)' == 'Debug'" />
+
+	<Target Name="SetAssemblyVersion" BeforeTargets="BeforeBuild" Condition="'$(Configuration)' != 'Debug'">
+		<_buildTasks.SetVersionTask>
+			<Output TaskParameter="TheVersion" PropertyName="AssemblyVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="FileVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="Version" />
+		</_buildTasks.SetVersionTask>
+	</Target>
+
+	<UsingTask TaskName="_buildTasks.SetVersionTask" AssemblyFile="..\_buildTasks\bin\Release\netstandard2.0\_buildTasks.dll" Condition="'$(Configuration)' != 'Debug'" />
+
+</Project>

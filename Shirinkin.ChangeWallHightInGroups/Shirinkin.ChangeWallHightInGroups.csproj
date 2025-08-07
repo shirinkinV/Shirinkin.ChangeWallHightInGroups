@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Configurations>D2021;R2021</Configurations>
+		<Platforms>x64</Platforms>
+		<Optimize>false</Optimize>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'R2021' Or '$(Configuration)' == 'D2021'">
+		<PackageReference Include="RevitAPI2021" Version="21.1.11.27" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Shirinkin.ChangeWallHightInGroups.Model\Shirinkin.ChangeWallHightInGroups.Model.csproj" />
+	  <ProjectReference Include="..\Shirinkin.ChangeWallHightInGroups.UI\Shirinkin.ChangeWallHightInGroups.UI.csproj" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'D2021'">
+		<DefineConstants>DEBUG;TRACE;REVIT_2021;REVIT_2019_AND_GREATER;REVIT_2020_AND_GREATER;REVIT_2021_AND_GREATER</DefineConstants>
+		<DebugSymbols>true</DebugSymbols>
+		<DebugType>full</DebugType>
+		<OutDir>.\bin\Debug\2021\</OutDir>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(Configuration)' == 'R2021'">
+		<DefineConstants>TRACE;REVIT_2021;REVIT_2019_AND_GREATER;REVIT_2020_AND_GREATER;REVIT_2021_AND_GREATER</DefineConstants>
+		<DebugSymbols>false</DebugSymbols>
+		<DebugType>none</DebugType>
+		<OutDir>.\bin\Release\2021\</OutDir>
+	</PropertyGroup>
+
+	<Target Name="SetAssemblyVersion" BeforeTargets="BeforeBuild">
+		<_buildTasks.SetVersionTask>
+			<Output TaskParameter="TheVersion" PropertyName="AssemblyVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="FileVersion" />
+			<Output TaskParameter="TheVersion" PropertyName="Version" />
+		</_buildTasks.SetVersionTask>
+	</Target>
+
+	<UsingTask TaskName="_buildTasks.SetVersionTask" AssemblyFile="..\_buildTasks\bin\Release\netstandard2.0\_buildTasks.dll" />
+
+</Project>
