@@ -11,6 +11,7 @@
 		<UseWPF>true</UseWPF>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="ITEM.SDK.Metadata" Version="1.2.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
 	</ItemGroup>
 
@@ -46,4 +47,8 @@
 
 	<UsingTask TaskName="_buildTasks.SetVersionTask" AssemblyFile="..\_buildTasks\bin\Release\netstandard2.0\_buildTasks.dll" />
 
+	<Target Name="DeployContinuoslyToRevit" BeforeTargets="AfterBuild" Condition="'$(Configuration)'=='D2021'">
+		<Exec Command="C:\YandexDisk\&quot;Itemica Applications&quot;\dev_tools\ITEM.PluginMetadataGenerator.exe $(ProjectDir)bin d t" />
+		<Exec Command="C:\YandexDisk\&quot;Itemica Applications&quot;\dev_tools\ITEM.PluginsFilesPublisher.exe $(ProjectDir)bin d n n y n" />
+	</Target>
 </Project>
